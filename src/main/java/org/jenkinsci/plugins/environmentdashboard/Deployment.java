@@ -8,6 +8,7 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
 import jenkins.model.RunAction2;
 import jenkins.tasks.SimpleBuildStep;
+import org.jenkinsci.plugins.tokenmacro.TokenMacro;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -40,9 +41,21 @@ public class Deployment extends Builder implements SimpleBuildStep {
             @Nonnull Launcher launcher,
             @Nonnull TaskListener listener
     ) throws InterruptedException, IOException {
+        String expanded_env         = "";
+        String expanded_buildNumber = "";
+        try {
+            expanded_env = TokenMacro.expandAll(run, workspace, listener, env);
+        } catch (Exception e) {
+            expanded_env = env;
+        }
+        try {
+            expanded_buildNumber = TokenMacro.expandAll(run, workspace, listener, buildNumber);
+        } catch (Exception e) {
+            expanded_buildNumber = buildNumber;
+        }
         run.addAction(new DeploymentAction(
-                env,
-                buildNumber
+            expanded_env,
+            expanded_buildNumber
         ));
     }
 
