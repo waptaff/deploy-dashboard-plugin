@@ -27,12 +27,12 @@ public class DeploymentView extends ListView {
         List<Run> runs = ((Job) item).getBuilds();
         Map<String, Deployment.DeploymentAction> envs = new TreeMap<>();
         for (Run run : runs) {
-            Deployment.DeploymentAction deployment = run.getAction(Deployment.DeploymentAction.class);
-
-            if (deployment == null || envs.containsKey(deployment.getEnv())) {
-                continue;
+            for (Deployment.DeploymentAction deployment : run.getActions(Deployment.DeploymentAction.class)) {
+                if (deployment == null || envs.containsKey(deployment.getEnv())) {
+                    continue;
+                }
+                envs.put(deployment.getEnv(), deployment);
             }
-            envs.put(deployment.getEnv(), deployment);
         }
 
         return envs;
