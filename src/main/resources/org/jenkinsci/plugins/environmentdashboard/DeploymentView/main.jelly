@@ -51,7 +51,7 @@
                             <j:if test="${empty(deployments)}">
                                 <tr id="job_build">
                                     <td>
-                                        <a href="${job.getAbsoluteUrl()}" style="margin-left: .5em">${job.name}</a>
+                                        <a href="${job.getAbsoluteUrl()}" style="margin-left: .5em">${job.fullDisplayName}</a>
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -64,7 +64,7 @@
                                 <tr id="job_build">
                                     <td>
                                         <j:if test="${j == 0}">
-                                            <a href="${job.getAbsoluteUrl()}" style="margin-left: .5em">${job.name}</a>
+                                            <a href="${job.getAbsoluteUrl()}" style="margin-left: .5em">${job.fullDisplayName}</a>
                                         </j:if>
                                     </td>
                                     <td>
